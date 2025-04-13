@@ -16,14 +16,13 @@
   # Define basic color variables
   local grey='242' red='1' yellow='3' blue='4' magenta='5' cyan='6' white='7' green='76'
 
-  # Left prompt segments: show context (user@host), current directory and Git status, then prompt symbol.
-  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( context dir vcs prompt_char )
+  # Left prompt: Display Git info first so branch name 
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( vcs context dir prompt_char )
   
-  # Right prompt segments: show previous command duration, Python virtualenv info,
-  # active Conda environment, current Pyenv version and current time.
+  # Right prompt: Show command execution time, Python virtualenv, Conda (anaconda), Pyenv, and time.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=( command_execution_time virtualenv anaconda pyenv time )
 
-  # Basic style options
+  # Basic style options (transparent background, minimal separators)
   typeset -g POWERLEVEL9K_BACKGROUND=
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_{LEFT,RIGHT}_WHITESPACE=
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '
@@ -31,7 +30,7 @@
   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
 
-  # Prompt character colors and symbols
+  # Prompt characters and colors
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS}_FOREGROUND=$magenta
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS}_FOREGROUND=$red
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
@@ -39,32 +38,32 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='❮'
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
 
-  # Virtualenv (for Python virtual environments)
+  # Virtualenv (Python)
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
 
-  # Directory segment
+  # Current directory segment
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$blue
 
-  # Context segment (user@host)
+  # Context (user@host)
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$white}%n%f%F{$grey}@%m%f"
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE="%F{$grey}%n@%m%f"
   typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_CONTENT_EXPANSION=
 
-  # Command execution time segment (display only if ≥5s)
+  # Command execution time
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$yellow
 
-  # VCS (Git) segment settings
+  # VCS (Git) settings: Ensure branch name displays
   typeset -g POWERLEVEL9K_VCS_FOREGROUND=$grey
   typeset -g POWERLEVEL9K_VCS_LOADING_TEXT=
   typeset -g POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0
   typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$cyan
   typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind)
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=' '  # This icon will precede the branch name.
   typeset -g POWERLEVEL9K_VCS_COMMIT_ICON='@'
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED}_ICON=
   typeset -g POWERLEVEL9K_VCS_DIRTY_ICON='*'
@@ -73,11 +72,11 @@
   typeset -g POWERLEVEL9K_VCS_{COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=1
   typeset -g POWERLEVEL9K_VCS_CONTENT_EXPANSION='${${${P9K_CONTENT/⇣* :⇡/⇣⇡}// }//:/ }'
 
-  # Anaconda segment (for Conda environments)
+  # Anaconda segment (Conda environments)
   typeset -g POWERLEVEL9K_ANACONDA_FOREGROUND=$green
   typeset -g POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${CONDA_DEFAULT_ENV:-${CONDA_PREFIX:t}}'
 
-  # Pyenv segment (for pyenv-managed Python versions)
+  # Pyenv segment (pyenv-managed Python versions)
   typeset -g POWERLEVEL9K_PYENV_FOREGROUND=$cyan
   typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=true
   typeset -g POWERLEVEL9K_PYENV_CONTENT_EXPANSION='${P9K_CONTENT}'
@@ -87,7 +86,7 @@
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
   typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
 
-  # Transient & instant prompt settings
+  # Transient and instant prompt settings
   typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
