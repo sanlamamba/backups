@@ -1,0 +1,22 @@
+// Save as eslint.config.mjs in a Node project (ESLint 10 flat config).
+// npm i -D eslint @eslint/js eslint-plugin-n eslint-plugin-prettier eslint-config-prettier prettier
+import js from "@eslint/js";
+import n from "eslint-plugin-n";
+import prettierRecommended from "eslint-plugin-prettier/recommended";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  js.configs.recommended,
+  ...n.configs["flat/mixed-esm-and-cjs"],
+  prettierRecommended,
+  {
+    rules: {
+      "no-unused-vars": "warn",
+      "n/no-process-exit": "off",
+    },
+  },
+  {
+    files: ["eslint.config.*"],
+    rules: { "n/no-unpublished-import": "off" },
+  },
+]);

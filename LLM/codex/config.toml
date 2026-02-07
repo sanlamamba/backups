@@ -1,0 +1,9 @@
+# Codex counterpart of LLM/claude/settings.json. Linked to ~/.codex/config.toml.
+# Codex writes trusted-project entries here, so review `git diff` before committing.
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "high"
+
+[features]
+hooks = true

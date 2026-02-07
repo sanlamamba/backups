@@ -1,0 +1,50 @@
+# Codex counterpart of the allow/ask lists in LLM/claude/settings.json.
+# Read-only and test commands need no rule: the workspace-write sandbox already runs them.
+
+prefix_rule(
+    pattern = ["git", ["commit", "push", "reset", "restore", "clean", "rebase"]],
+    decision = "prompt",
+    justification = "Changes history, the remote or the working tree",
+    match = ["git commit -m wip", "git push --force", "git rebase main"],
+    not_match = ["git status", "git log --oneline"],
+)
+
+prefix_rule(
+    pattern = ["git", "checkout", "--"],
+    decision = "prompt",
+    justification = "Discards working-tree changes",
+)
+
+prefix_rule(
+    pattern = ["git", "stash", "drop"],
+    decision = "prompt",
+    justification = "Deletes a stash",
+)
+
+prefix_rule(
+    pattern = ["git", "branch", "-D"],
+    decision = "prompt",
+    justification = "Force-deletes a branch",
+)
+
+prefix_rule(
+    pattern = ["rm", "-rf"],
+    decision = "prompt",
+    justification = "Recursive delete",
+)
+
+# Need the network, which the sandbox blocks.
+prefix_rule(
+    pattern = ["git", "fetch"],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = ["glab", "mr", ["list", "view", "diff"]],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = ["gh", "pr", ["list", "view", "diff"]],
+    decision = "allow",
+)
